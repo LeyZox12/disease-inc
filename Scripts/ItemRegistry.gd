@@ -12,10 +12,11 @@ func _process(delta: float) -> void:
 	pass
 
 
-func register_item(inventory_sprite: Texture2D, inventory_shape, weight: float, model: Mesh, onUse: Callable):
+func register_item(inventory_sprite: Texture2D, inventory_shape, cut_size: Vector2, weight: float, model: Mesh, onUse: Callable):
 	var item = Item.new()
 	item.inventory_sprite = inventory_sprite
 	item.inventory_shape = inventory_shape
+	item.cut_size = cut_size
 	var coll = ConvexPolygonShape3D.new()
 	coll.points = model.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
 	var collision_shape = CollisionShape3D.new()

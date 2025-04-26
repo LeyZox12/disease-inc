@@ -29,9 +29,18 @@ func _input(event: InputEvent) -> void:
 		CAMERA.global_rotation.y -= event.relative.x * SENS
 		CAMERA.global_rotation.x -= event.relative.y * SENS
 		CAMERA.global_rotation.x = clamp(CAMERA.global_rotation.x, -0.90, 0.90)
+	if(event is InputEventMouseButton and event.pressed):
+		CAMERA.get_node("GUI").OnClick()
 	if event.is_action_pressed("toggle_inventory"):
 		CAMERA.get_node("GUI").toggle_inventory()
 	for i in range(CAMERA.get_node("GUI").HOTBAR_MAX):
 		if event.is_action_pressed(str(i+1)):
 			CAMERA.get_node("GUI/Hotbar").get_child(i).grab_focus()
 			break
+	if event.is_action_pressed("interact"):
+		CAMERA.get_node("RayCast3D").OnInteract()
+	if event.is_action_pressed("rotate"):
+		CAMERA.get_node("GUI").OnRotate()
+
+func add_item_to_inv(item):
+	CAMERA.get_node("GUI").add_item(item)
