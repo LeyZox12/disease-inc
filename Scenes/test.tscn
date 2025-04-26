@@ -1,0 +1,126 @@
+[gd_scene load_steps=11 format=3 uid="uid://ck1kdimcbdvr5"]
+
+[ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_sxa8o"]
+[ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_tr1t1"]
+[ext_resource type="Script" path="res://Scripts/UI.gd" id="2_r657e"]
+[ext_resource type="Texture2D" uid="uid://btd5dgcpt7r4g" path="res://Assets/normal.png" id="4_gwqr6"]
+[ext_resource type="Script" path="res://PlayerEyeRaycast.gd" id="5_e3evj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xu770"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m78f6"]
+size = Vector3(3.86676, 0.0679932, 3.88379)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_egwdt"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_y6s20"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vwiqd"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_tr1t1")
+
+[node name="floor" type="RigidBody3D" parent="."]
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(3.85703, 0, 0, 0, 0.071066, 0, 0, 0, 3.85703, 0, 0, 0)
+mesh = SubResource("BoxMesh_xu770")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00619507, 0.000427246, -0.00634766)
+shape = SubResource("BoxShape3D_m78f6")
+
+[node name="Player" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.464415, 4.08216, -0.548734)
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("1_sxa8o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_egwdt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+layers = 2
+mesh = SubResource("CapsuleMesh_y6s20")
+skeleton = NodePath("")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784999, 0)
+
+[node name="GUI" type="Control" parent="Player/Camera3D"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1.0
+offset_top = 5.0
+offset_right = 1148.0
+offset_bottom = 649.0
+script = ExtResource("2_r657e")
+
+[node name="Hotbar" type="GridContainer" parent="Player/Camera3D/GUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -54.0
+offset_top = -108.0
+offset_right = 54.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(3.5093, 3.5093)
+theme_override_constants/h_separation = 5
+columns = 10
+
+[node name="Inventory" type="GridContainer" parent="Player/Camera3D/GUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -12.0
+offset_right = 12.0
+offset_bottom = 24.0
+grow_horizontal = 2
+scale = Vector2(3.509, 3.509)
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+
+[node name="Crosshair" type="TextureRect" parent="Player/Camera3D/GUI"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_gwqr6")
+
+[node name="RayCast3D" type="RayCast3D" parent="Player/Camera3D"]
+target_position = Vector3(0, 0, -3)
+script = ExtResource("5_e3evj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.21041, 1.77103, -5.3231)
+mesh = SubResource("BoxMesh_vwiqd")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.11943, 1.77103, -1.482)
+mesh = SubResource("BoxMesh_vwiqd")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.28425, 1.77103, 0.94856)
+mesh = SubResource("BoxMesh_vwiqd")
