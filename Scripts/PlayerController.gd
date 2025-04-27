@@ -28,7 +28,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and not CAMERA.get_node("GUI").inventory_out:
 		CAMERA.global_rotation.y -= event.relative.x * SENS
 		CAMERA.global_rotation.x -= event.relative.y * SENS
-		CAMERA.global_rotation.x = clamp(CAMERA.global_rotation.x, -0.90, 0.90)
+		CAMERA.global_rotation.x = clamp(CAMERA.global_rotation.x, -1.0, 1.0)
 	if(event is InputEventMouseButton and event.pressed):
 		CAMERA.get_node("GUI").OnClick()
 	if event.is_action_pressed("toggle_inventory"):
@@ -41,6 +41,8 @@ func _input(event: InputEvent) -> void:
 		CAMERA.get_node("RayCast3D").OnInteract()
 	if event.is_action_pressed("rotate"):
 		CAMERA.get_node("GUI").OnRotate()
+	if event.is_action_pressed("drop"):
+		CAMERA.get_node("GUI").OnDrop()
 
 func add_item_to_inv(item):
 	CAMERA.get_node("GUI").add_item(item)
